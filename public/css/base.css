@@ -2,7 +2,13 @@
     box-sizing: border-box !important;
 }
 
+a, a:visited, a:focus {
+    color: #000;
+    text-decoration: none;
+}
+
 html, body {
     margin: 0px;
+    font-family: 'Montserrat';
 }
 

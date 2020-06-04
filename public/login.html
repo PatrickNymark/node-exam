@@ -12,10 +12,16 @@
     <div class="login-wrapper">
         <div class="login-content">
             <h1>Login</h1>
-            <form id="loginForm" action="/api/auth/login" >
-                <input id="email" type="text" placeholder="email">
-                <input id="password" type="text" placeholder="password">
-                <button type="submit">Login</button>
+            <span id="error"></span>
+            <form id="loginForm" action="/api/auth/login">
+                <div class="form-content">
+                    <input class="login-input" id="email" type="text" placeholder="email">
+                    <input class="login-input" id="password" type="text" placeholder="password">
+                </div>
+                <button class="button" type="submit">Login</button>
+                <div class="register-wrapper">
+                    <p>New user? Register <a href="/register">here!</a></p>
+                </div>
             </form>
         </div>
     </div>

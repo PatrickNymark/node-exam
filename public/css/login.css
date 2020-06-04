@@ -4,6 +4,19 @@
     height: calc(100vh - 50px)
 }
 
+#error {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    background: red;
+    opacity: 0;
+    color: #fff;
+    font-size: 10px;
+    padding: 5px 15px;
+    transition: opacity 0.5s;
+    text-transform: none;
+}
+
 .login-content {
     height: 400px;
     width: 350px;
@@ -15,4 +28,37 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-transform: uppercase;
 }
+
+.form-content {
+    padding: 20px;
+}
+
+.login-input {
+    display: block;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    padding: 10px;
+    margin: 10px;
+}
+
+.login-input:focus {
+    outline: none;
+}
+
+.button {
+    padding: 10px 50px;
+    background: #000;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.register-wrapper {
+    font-size: 12px;
+    text-transform: none;
+    padding-top: 10px;
+}
+
