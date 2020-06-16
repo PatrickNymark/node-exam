@@ -1,6 +1,8 @@
 const gameService = require('../services/game.service');
 const betService = require('../services/bet.service');
 
+const Coupon = require('../models/coupon')
+
 module.exports = function(socket) {
     socket.on('connection', function (socket) {
         

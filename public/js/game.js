@@ -20,24 +20,25 @@ socket.on('initial-game', function(game) {
     bets = game.bets;
 
     $('#game-header').text(`${game.home} v ${game.away}`);
-
     game.bets.forEach(bet => {
         $('#game-wrapper').hide().append(
-            `<div id="${bet._id}" class="game-content">
-                <p class="odds-header">${bet.type}</p>
-                <div class="bet-content">
-                    <div id="0" class="${bet.x ? 'bet-item' : 'bet-item-2'}">
-                        <p><span>${bet.home.title ? bet.home.title : game.home}</span> <span class="odds">${bet.home.odds}</span></p>
-                    </div>
-                    ${bet.x ? `<div id="1" class="bet-item">
-                        <p><span>${bet.x.title ? bet.x.title : 'Draw'} </span> <span class="odds">${bet.x.odds}</span></p>
-                    </div>` : ""}
-                    <div id="2" class="${bet.x ? 'bet-item' : 'bet-item-2'}">
-                    
-                        <p><span>${bet.away.title ? bet.away.title : game.away}</span> <span class="odds">${bet.away.odds}</span></p>
+            `<div id="${game._id}">
+                <div id="${bet._id}" class="game-content">
+                    <p class="odds-header">${bet.type}</p>
+                    <div class="bet-content">
+                        <div id="0" class="${bet.x ? 'bet-item' : 'bet-item-2'}">
+                            <p><span>${bet.home.title ? bet.home.title : game.home}</span> <span class="odds">${bet.home.odds}</span></p>
+                        </div>
+                        ${bet.x ? `<div id="1" class="bet-item">
+                            <p><span>${bet.x.title ? bet.x.title : 'Draw'} </span> <span class="odds">${bet.x.odds}</span></p>
+                        </div>` : ""}
+                        <div id="2" class="${bet.x ? 'bet-item' : 'bet-item-2'}">
+                        
+                            <p><span>${bet.away.title ? bet.away.title : game.away}</span> <span class="odds">${bet.away.odds}</span></p>
+                        </div>
                     </div>
                 </div>
-            </div>`
+            </div`
         ).fadeIn(200)
         
     })
@@ -76,30 +77,43 @@ $(document).ready(function () {
     /* adds the bet to localstorage */
     $(document).on('click', '.bet-item-2, .bet-item', function (e) {
         betId = $(this).parent().parent().attr('id')
+        gameId = $(this).parent().parent().parent().attr('id')
         betChoice = $(this).attr('id')
 
-        bet = {
-            choice: betChoice,
-            id: betId
-        }
+        bet = { choice: betChoice, id: betId, game: gameId }
 
-        var currentBets = JSON.parse(localStorage.getItem("coupon"))
+        var currentBets = getFromStorage()
 
-        if (currentBets === null) {
-            currentBets = []
-        }
+        if (currentBets === null) { currentBets = [] }
 
-        currentBets.push(bet)
+        /* Check if a bet from current game already exists, 
+        since u cant have 2 bets from same match on same coupon */
+        if (currentBets.some(e => e.game === gameId)) {
+            flashMessage('You cant have 2 bets from same match')
+        } else {
+            currentBets.push(bet)
 
-        localStorage.setItem("coupon", JSON.stringify(currentBets))
-
-        $('#game-message').append('<p>Bet added to coupon!<p>')
+            addToStorage(currentBets)
+            flashMessage('Bet added to coupon!')
+        }        
+    })
+ 
+    function flashMessage(msg) {
+        $('#game-message').append(`<p>${msg}</p>`)
             .fadeIn(400)
             .delay(1500)
             .fadeOut(300, function() { 
                 $(this).children().remove(); 
             })
-    })
+    }
+
+    function addToStorage(bets) {
+        localStorage.setItem("coupon", JSON.stringify(bets))
+    }
+
+    function getFromStorage() {
+        return JSON.parse(localStorage.getItem("coupon"))
+    }
     
 })
 

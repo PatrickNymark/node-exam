@@ -3,15 +3,14 @@ const socket = io.connect("http://localhost:5000")
 
 /* open connection to recieve update bets from bets stored in localstorage  */
 socket.on('connect', () => {
-    const bets = JSON.parse(localStorage.getItem('coupon'))
+    const bets = getFromStorage()
 
     socket.emit('request-coupon', bets, true)
 })
 
 /* emitted from the server when a bet is updated */
 socket.on('update-bets', () => {
-    const bets = JSON.parse(localStorage.getItem('coupon'))
-
+    const bets = getFromStorage()
     socket.emit('request-coupon', bets, false)
 })
 
@@ -25,6 +24,9 @@ var total = 1
 /* emitted on initial load to build the dom */
 socket.on('initial-coupon', (bets) => {
     oldBets = bets
+
+    // if no bets - disable button
+    verifyBets(bets, 0)
 
     bets.forEach(joinedBets => {
         const bet = joinedBets.bet
@@ -82,8 +84,12 @@ socket.on('initial-coupon', (bets) => {
 
 /* called after an update on a bet to manipulate and animate the changed state*/
 socket.on('updated-coupon', (bets) => {
+    total = 1;
+
+    verifyBets(bets, 0)
+
     for(var i = 0; i < oldBets.length; i++) {
-        const odds = $(`#${oldBets[i].bet.id}`).find('.odds');
+        const odds = $(`#${oldBets[i].bet._id}`).find('.odds');
 
         if(bets[i].bet.home.odds !== oldBets[i].bet.home.odds) {
             odds.fadeOut(400)
@@ -98,7 +104,7 @@ socket.on('updated-coupon', (bets) => {
         total = total * Number(odds.html())
     }
 
-    $('.total-wrapper').html(`<p>Total Odds: ${total.toFixed()}</p>`)
+    $('.total-wrapper').fadeOut(400).html(`<p>Total Odds: ${total.toFixed(2)}</p>`).fadeIn(400)
     oldBets = bets
 })
 
@@ -109,7 +115,7 @@ socket.on('created-coupon', (coupon) => {
     localStorage.removeItem('coupon')
 
     $('.total-wrapper').html(`<p>No bets added to coupon`)
-    $('.coupon-wrapper').hide().append('<p style="font-size: 15px">Coupon added! Good Luck!<p>')
+    $('.coupon-wrapper').hide().append('<p id="message" style="font-size: 15px">Coupon added! Good Luck!<p>')
         .fadeIn(700)
         .delay(3000)
         .fadeOut(300)
@@ -158,15 +164,32 @@ $(document).ready(function () {
 
     /* disable submit button when amount is less than or equal to 0 */
     $(document).on('keyup', '#test', function(e) {
-        if(!e.target.value > 0) {
-            $('.btn').css({'pointer-events': 'none'});
-        } else {
-            $('.btn').css({'pointer-events': 'auto'});
+        // if(!e.target.value > 0) {
+            verifyBets(oldBets, e.target.value)
+        //     $('.btn').css({'pointer-events': 'none'});
+        // } else {
+        //     $('.btn').css({'pointer-events': 'auto'});
 
-        }
+        // }
     })
     
 })
+
+function addToStorage(bets) {
+    localStorage.setItem("coupon", JSON.stringify(bets))
+}
+
+function getFromStorage() {
+    return JSON.parse(localStorage.getItem("coupon"))
+}
+
+function verifyBets(bets, value) {
+    if((bets && !bets.length > 0) || (value && !value > 0)) {
+        $('.btn').css({'pointer-events': 'none'});
+    } else {
+        $('.btn').css({'pointer-events': 'auto'});
+    }   
+}
 
 
 
