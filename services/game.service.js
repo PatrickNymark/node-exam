@@ -30,7 +30,8 @@ async function find() {
 }
 
 /**
- * Find single game
+ * Find single game, populated with the connected bets
+ * @param {string} id representing a games id
  * @returns a Promise or exception  
  */
 async function findById(id) {

@@ -54,6 +54,7 @@ input:focus::placeholder {
     border-left: none;
     cursor: pointer;
     border-radius: 25px 25px 25px 25px;
+    pointer-events: none;
 }
 
 .btn:focus {

@@ -13,7 +13,7 @@ fetch('/api/games').then(res => res.json()).then(games => {
 $('.container').hide().prepend(`<h1>Games</h1>`).fadeIn(400)
 
 $(document).ready(function () {
-    $('#games-wrapper').on('click', ".game-wrapper", function(){
+    $(document).on('click', ".game-wrapper", function(){
         const game = $(this).children().first().attr('id')
         window.location = `/games/${game}`
     });

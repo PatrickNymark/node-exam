@@ -21,7 +21,7 @@ async function create(postData) {
 }
 
 /**
- * Find posts/post
+ * Find posts
  * @returns a Promise or exception  
  */
 async function find() {

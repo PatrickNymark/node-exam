@@ -33,10 +33,20 @@ async function update(id, betData) {
     // });
 }
 
+/**
+ * Find bet by ID
+ * @param {id} string a representing a bets id
+ * @returns a Promise or exception  
+ */
 async function findById(id) {
     return await Bet.findById(id)
 }
 
+/**
+ * Find muliple by ids, populated connected game
+ * @param {object} betData a object representing a Bet
+ * @returns a Promise or exception  
+ */
 async function findByIds(ids) {
     return await Bet.find().populate('game_id').where('_id').in(ids)
 }

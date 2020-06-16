@@ -9,9 +9,6 @@ const server = require("http").Server(app);
 const io = require('socket.io')(server)
 const bodyParser = require('body-parser')
 
-const Chat = require('./models/Chat');
-const Post = require('./models/Post');
-const Bet = require('./models/Bet');
 const Coupon = require('./models/Coupon');
 
 mongoose.connect('mongodb://localhost:27017/exam-project', {
@@ -50,10 +47,6 @@ io.use(function(socket, next) {
     sessionMiddleware(socket.request, socket.request.res || {}, next);
 });
 
-// Expose the node_modules folder as static resources (to access socket.io.js in the browser)
-
-// Handle connection
-// When a client connects, we note it in the console
 
 
 const gameService = require('./services/game.service');

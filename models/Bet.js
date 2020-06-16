@@ -18,14 +18,13 @@ const BetSchema = new Schema({
     },
     game_id: {
         type: Schema.Types.ObjectId,
-        ref: 'game'
+        ref: 'game', 
+        required: true
     }
 }, 
 { 
     timestamps: true 
 });
 
-BetSchema.set('toObject', { virtuals: true });
-BetSchema.set('toJSON', { virtuals: true });
 
 module.exports = Bet = mongoose.model("bet", BetSchema);

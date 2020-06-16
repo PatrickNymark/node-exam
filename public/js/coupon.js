@@ -1,114 +1,125 @@
 
-var total = 1
 const socket = io.connect("http://localhost:5000")
 
-    socket.on('connect', () => {
-        // socket.emit('request-game', gameId)
-        console.log('connected')
-        const bets = JSON.parse(localStorage.getItem('coupon'))
+/* open connection to recieve update bets from bets stored in localstorage  */
+socket.on('connect', () => {
+    const bets = JSON.parse(localStorage.getItem('coupon'))
 
-        socket.emit('request-coupon', bets)
-    })
+    socket.emit('request-coupon', bets)
+})
 
-    socket.on('update-bets', () => {
-        const bets = JSON.parse(localStorage.getItem('coupon'))
+/* emitted from the server when a bet is updated */
+socket.on('update-bets', () => {
+    const bets = JSON.parse(localStorage.getItem('coupon'))
 
-        // $('.coupon-wrapper').html('')
+    socket.emit('update-coupon', bets)
+})
 
-        socket.emit('update-coupon', bets)
-    })
 
-    var oldBets = []
+/* used to store most recent update to check which require update*/
+var oldBets = []
 
-    socket.on('initial-coupon', (bets) => {
-        console.log(bets)
-        oldBets = bets
-        // var total = 1;
-        bets.forEach(bet => {
-            if(Number(bet.choice.choice) === 0 ) {
+/* used to store total odds value of added bets  */
+var total = 1
+
+/* emitted on initial load to build the dom */
+socket.on('initial-coupon', (bets) => {
+    oldBets = bets
+
+    bets.forEach(joinedBets => {
+        const bet = joinedBets.bet
+        const choice = joinedBets.choice
+
+        switch(Number(choice.choice)) {
+            case 0:
                 $('.coupon-wrapper').append(
-                    `<div id="${bet.bet._id}" class="bet-wrapper">
-                        <div class="bet-item">${bet.bet.type}</div>
-                        <div class="bet-item">${bet.bet.game_id.home} v ${bet.bet.game_id.away}</div>
-                        <div class="bet-item-sm">${bet.bet.home.title}</div>
-                        <div class="bet-item-sm odds">${bet.bet.home.odds}</div>
+                    `<div id="${bet._id}" class="bet-wrapper">
+                        <div class="bet-item">${bet.type}</div>
+                        <div class="bet-item">${bet.game_id.home} v ${bet.game_id.away}</div>
+                        <div class="bet-item-sm">${bet.home.title}</div>
+                        <div class="bet-item-sm odds">${bet.home.odds}</div>
                         <div id="delete">X</div>
                     </div>`)
 
-                total = total * bet.bet.home.odds
-            } else if(Number(bet.choice.choice) === 1 )  {
+                total = total * bet.home.odds
+                break;
+
+            case 1:
                 $('.coupon-wrapper').append(
-                    `<div id="${bet.bet._id}" class="bet-wrapper">
-                        <div class="bet-item">${bet.bet.type}</div>
-                        <div class="bet-item">${bet.bet.game_id.home} v ${bet.bet.game_id.away}</div>
-                        <div class="bet-item-sm">${bet.bet.x.title}</div>
-                        <div class="bet-item-sm odds">${bet.bet.x.odds}</div>
+                    `<div id="${bet._id}" class="bet-wrapper">
+                        <div class="bet-item">${bet.type}</div>
+                        <div class="bet-item">${bet.game_id.home} v ${bet.game_id.away}</div>
+                        <div class="bet-item-sm">${bet.x.title}</div>
+                        <div class="bet-item-sm odds">${bet.x.odds}</div>
                         <div id="delete">X</div>
                     </div>`)
-                total = total * bet.bet.x.odds
 
-            } else if(Number(bet.choice.choice) === 2 ) {
-                total = total * bet.bet.away.odds
+                total = total * bet.x.odds
+                break;
 
+            case 2:
                 $('.coupon-wrapper').append(
-                    `<div id="${bet.bet._id}" class="bet-wrapper">
-                        <div class="bet-item">${bet.bet.type}</div>
-                        <div class="bet-item">${bet.bet.game_id.home} v ${bet.bet.game_id.away}</div>
-                        <div class="bet-item-sm">${bet.bet.away.title}</div>
-                        <div class="bet-item-sm odds">${bet.bet.away.odds}</div>
+                    `<div id="${bet._id}" class="bet-wrapper">
+                        <div class="bet-item">${bet.type}</div>
+                        <div class="bet-item">${bet.game_id.home} v ${bet.game_id.away}</div>
+                        <div class="bet-item-sm">${bet.away.title}</div>
+                        <div class="bet-item-sm odds">${bet.away.odds}</div>
                         <div id="delete">X</div>
                     </div>`)
-            }
 
-            console.log(total)
-        })
+                total = total * bet.away.odds
+                break;
 
-        $('.total-wrapper').html(`<p>Total Odds: ${total}</p>`)
-        console.log(oldBets.length)
-        if(!oldBets.length > 0) {
-            $('.input').css({ 'pointer-events: ': 'none'})
-            $('.btn').css({ 'pointer-events: ': 'none'})
+            default: 
+                break;
 
         }
     })
 
-    socket.on('updated-coupon', (bets) => {
-        // var total = 1;
+    $('.total-wrapper').html(`<p>Total Odds: ${total.toFixed(2)}</p>`)
 
-        for(var i = 0; i < oldBets.length; i++) {
-            const odds = $(`#${oldBets[i].bet.id}`).find('.odds');
-            if(bets[i].bet.home.odds !== oldBets[i].bet.home.odds) {
-                odds.fadeOut(400)
-                odds.text(bets[i].bet.home.odds)
-                odds.fadeIn(400)
-            } else if(bets[i].bet.away.odds !== oldBets[i].bet.away.odds) {
-                odds.fadeOut(400)
-                odds.text(bets[i].bet.away.odds)
-                odds.fadeIn(400)
-            }
+})
 
-            total = total * Number(odds.html())
+/* called after an update on a bet to manipulate and animate the changed state*/
+socket.on('updated-coupon', (bets) => {
+    for(var i = 0; i < oldBets.length; i++) {
+        const odds = $(`#${oldBets[i].bet.id}`).find('.odds');
+
+        if(bets[i].bet.home.odds !== oldBets[i].bet.home.odds) {
+            odds.fadeOut(400)
+            odds.text(bets[i].bet.home.odds)
+            odds.fadeIn(400)
+        } else if(bets[i].bet.away.odds !== oldBets[i].bet.away.odds) {
+            odds.fadeOut(400)
+            odds.text(bets[i].bet.away.odds)
+            odds.fadeIn(400)
         }
 
-        $('.total-wrapper').html(`<p>Total Odds: ${total}</p>`)
+        total = total * Number(odds.html())
+    }
 
-        oldBets = bets
-    })
+    $('.total-wrapper').html(`<p>Total Odds: ${total.toFixed()}</p>`)
+    oldBets = bets
+})
 
-    socket.on('created-coupon', (coupon) => {
-        $('.coupon-wrapper').html('')
-        localStorage.removeItem('coupon')
-        $('.total-wrapper').html(`<p>No bets added to coupon`)
-        $('.coupon-wrapper').hide().append('<p style="font-size: 15px">Coupon added! Good Luck!<p>')
-            .fadeIn(700)
-            .delay(3000)
-            .fadeOut(300)
+/* emitted after succesfully creating a coupon */
+socket.on('created-coupon', (coupon) => {
+    $('.coupon-wrapper').html('')
 
-    })
+    localStorage.removeItem('coupon')
+
+    $('.total-wrapper').html(`<p>No bets added to coupon`)
+    $('.coupon-wrapper').hide().append('<p style="font-size: 15px">Coupon added! Good Luck!<p>')
+        .fadeIn(700)
+        .delay(3000)
+        .fadeOut(300)
+
+})
 
 $(document).ready(function () {
     $.getScript('/js/injector.js')
 
+    /* delete bet from coupon */
     $(document).on('click', '#delete', function(){
         const betId = $(this).parent().attr('id')
         
@@ -119,12 +130,14 @@ $(document).ready(function () {
         localStorage.setItem('coupon', JSON.stringify(localBets))
 
         $(this).parent().remove()
+        /* reload to update dom with bets from localstorage */
         location.reload()
-        // socket.emit('request-coupon', localBets)
     });
 
+    /* submit bet */
     $(document).on('click', '.btn', function(){
         var joinedBets = []
+
         for(var i = 0; i < oldBets.length; i++) {
             var bet = {}
             bet.bet = oldBets[i].bet
@@ -139,10 +152,11 @@ $(document).ready(function () {
             total: total,
             amount: 100
         }
+
         socket.emit('new-coupon', coupon)
-        // socket.emit('request-coupon', localBets)
     });
 
+    /* disable submit button when amount is less than or equal to 0 */
     $(document).on('keyup', '#test', function(e) {
         if(!e.target.value > 0) {
             $('.btn').css({'pointer-events': 'none'});
