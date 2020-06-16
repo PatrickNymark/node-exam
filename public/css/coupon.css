@@ -1,0 +1,73 @@
+.bet-wrapper {
+    /* width: 500px; */
+    background: #eee;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.bet-item {
+    width: 30%;
+}
+
+.bet-item-sm {
+    width: 20%;
+}
+
+.button-wrapper {
+    display: flex;
+    height: 40px;
+    margin-top: 20px;
+    justify-content: center;
+}
+
+.input {
+    width: 45%;
+    height: 100%;
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-right: none;
+    cursor: pointer;
+    border-radius: 25px 25px 25px 25px;
+    padding: 0px 30px;
+    margin: 10px;
+
+}
+
+.input:focus {
+    outline: none;
+}
+
+input:focus::placeholder {
+    color: transparent;
+}
+
+.btn {
+    margin: 10px;
+    width: 45%;
+    height: 100%;
+    border-right: 1px solid #eee;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-left: none;
+    cursor: pointer;
+    border-radius: 25px 25px 25px 25px;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+
+.btn:hover {
+    outline: none;
+    transform: scale(1.01)
+}
+
+#delete {
+    position: relative;
+    right: 30px;
+    cursor: pointer;
+}

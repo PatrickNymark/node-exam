@@ -3,7 +3,7 @@
 }
 
 a, a:visited, a:focus {
-    color: #000;
+    color: #fff;
     text-decoration: none;
 }
 
@@ -12,3 +12,11 @@ html, body {
     font-family: 'Montserrat';
 }
 
+.container {
+    text-align: center;
+    padding: 50px;
+}
+
+button, input {
+    font-family: 'Montserrat';
+}

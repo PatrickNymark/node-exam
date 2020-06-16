@@ -1,5 +1,30 @@
+@import 'base.css';
+
 .navigation-wrapper {
+    display: none;
     background: #000;
     color: #fff;
     height: 50px;
+}
+
+.menu {
+    display: flex;
+    height: 100%;
+    list-style: none;
+    position: relative;
+}
+
+.menu-item {
+    flex-direction: row;
+    align-items: center;
+    display: flex;
+    color:#fff !important;
+    padding: 10px;
+}
+
+.coupon {
+    position: absolute;
+    right: 50px;
+    top: 50%;
+    transform: translateY(-50%);
 }

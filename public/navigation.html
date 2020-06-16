@@ -1,8 +1,25 @@
-<div class="navigation-wrapper">
+
+<div id="authenticated" class="navigation-wrapper">
     <div class="navigation-content">
         <ul class="menu">
-            <li>Home</li>
-            <li>Dashboard</li>
+            <li class="menu-item"><a href="/">Home</a></li>
+            <li class="menu-item"><a href="/dashboard">Dashboard</a></li>
+            <li class="menu-item"><a href="/posts">Posts</a></li>
+            <li class="menu-item"><a href="/games">Games</a></li>
+            <li class="menu-item"><a href="/api/auth/logout">Logout</a></li>
+
+            <li class="menu-item coupon"><a href="/coupon">Coupon</a></li>
+
         </ul>
     </div>
 </div>
+
+<div id="not-authenticated" class="navigation-wrapper">
+    <div class="navigation-content">
+        <ul class="menu">
+            <li class="menu-item"><a href="/">Home</a></li>
+            <li class="menu-item"><a href="/login">Login</a></li>
+        </ul>
+    </div>
+</div>
+<script src="/js/navigation.js"></script>

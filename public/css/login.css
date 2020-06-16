@@ -1,11 +1,9 @@
-@import 'base.css';
 
 .login-wrapper {
     height: calc(100vh - 50px)
 }
 
 #error {
-    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     background: red;
@@ -60,5 +58,9 @@
     font-size: 12px;
     text-transform: none;
     padding-top: 10px;
+}
+
+.register-link {
+    color: #000 !important;
 }
 

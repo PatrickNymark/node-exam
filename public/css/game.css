@@ -1,0 +1,62 @@
+/* .game-container {
+    text-align: center;
+    padding: 50px;
+} */
+
+.bet-content {
+    display: flex;
+    
+}
+
+.game-container {
+    width: calc(70% - 20px);
+    padding: 0px 10px;
+}
+
+#game-wrapper {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 700px;
+}
+
+.game-content {
+    margin: 20px auto;
+}
+
+#game-message {
+    min-height: 40px;
+    display: none;
+}
+
+.odds-header {
+    margin: 0px;
+    padding: 10px;
+    background: #0f3c0f;
+    color: #fff;
+}
+
+.bet-item {
+    width: 33.33%;
+    background: #4b4b4b;
+    color: #fff;
+    cursor: pointer;
+    margin: 2px 1px;
+}
+
+.bet-item-2 {
+    width: 50%;
+    background: #4b4b4b;
+    color: #fff;
+    cursor: pointer;
+    margin: 2px 1px;
+
+}
+
+.bet-item:hover, .bet-item-2:hover {
+    opacity: 0.8;
+}
+
+.odds {
+    padding-left: 10px;
+}

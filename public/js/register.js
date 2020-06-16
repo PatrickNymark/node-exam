@@ -3,9 +3,9 @@ $(document).ready(function () {
     $.getScript('/js/injector.js')
 })
 
-// Login submit form
+// Register submit form
 $(function() {
-    $("#loginForm").submit(function(e) {
+    $("#registerForm").submit(function(e) {
         e.preventDefault();
 
         const user = {
@@ -19,7 +19,7 @@ $(function() {
             return
         }
 
-        $.post("/api/auth/login", user)
+        $.post("/api/auth/register", user)
             .done(function (data) {
                 if(data.isAuthenticated) {
                     document.location = '/dashboard'

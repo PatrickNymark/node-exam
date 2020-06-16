@@ -1,0 +1,42 @@
+
+const Bet = require('../models/Bet');
+const Game = require('../models/Game');
+
+module.exports = {
+    create,
+    update,
+    findById,
+    findByIds
+}
+
+/**
+ * Create new Bet
+ * @param {object} betData a object representing a Bet
+ * @returns a Promise or exception  
+ */
+async function create(gameId, betData) {
+    betData.game_id = gameId;
+    return await new Bet(betData).save().then(bet => {
+        return Game.findByIdAndUpdate(gameId, { $push: { bets: bet._id}})
+    });
+}
+
+/**
+ * Update bet
+ * @param {object} betData a object representing a Bet
+ * @returns a Promise or exception  
+ */
+async function update(id, betData) {
+    return await Bet.findByIdAndUpdate(id, betData)
+    // return await new Bet(betData).save().then(bet => {
+    //     return Game.findByIdAndUpdate(gameId, { $push: { bets: bet._id}})
+    // });
+}
+
+async function findById(id) {
+    return await Bet.findById(id)
+}
+
+async function findByIds(ids) {
+    return await Bet.find().populate('game_id').where('_id').in(ids)
+}

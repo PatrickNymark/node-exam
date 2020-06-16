@@ -3,10 +3,10 @@ const router = express.Router()
 const postService = require('../services/post.service')
 const authenticate = require('../helpers/authenticate')
 
-router.get('/', authenticate, getAllPieces)
+router.get('/', authenticate, getAllPosts)
 router.post('/', createPost)
 
-function getAllPieces(req, res, next) {
+function getAllPosts(req, res, next) {
     postService.find()
         .then(posts => res.json(posts))
         .catch(err => next(err))
@@ -14,8 +14,12 @@ function getAllPieces(req, res, next) {
 
 function createPost(req, res, next) {
     postService.create(req.body)
-        .then(post => res.json(post))
+        .then(post => {
+            req.io.sockets.emit('update-posts')
+            res.json(post)
+        })
         .catch(err => next(err))
 }
+
 
 module.exports = router

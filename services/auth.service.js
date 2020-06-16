@@ -1,11 +1,11 @@
 
 const bcrypt = require('bcrypt')
-
 const User = require('../models/User');
 
 module.exports = {
   login,
-  register
+  register,
+  current
 }
 
 /**
@@ -42,7 +42,21 @@ async function register(userData) {
     }
 
     const newUser = new User(userData)
-    return newUser.save();
+    return newUser.save().then(user => {
+        const { password, ...userWithOutPass } = user.toObject();
+        return {
+            ...userWithOutPass
+        }
+    })
 
+}
+
+/** 
+* Get current user 
+* @param {id} user id
+* @returns a Promise or exception  
+*/
+async function current(id) {
+    return await User.findById(id).select('-password')
 }
 

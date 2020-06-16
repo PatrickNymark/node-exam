@@ -1,0 +1,19 @@
+/* .games-container {
+    text-align: center;
+    padding: 50px;
+} */
+
+#games-wrapper {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.game-wrapper {
+    height: 50px;
+    width: calc(25% - 20px);
+    background: #eee;
+    margin: 10px;
+    cursor: pointer;
+    /* flex: 1; */
+}
