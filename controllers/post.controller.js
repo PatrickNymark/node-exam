@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const postService = require('../services/post.service')
-const authenticate = require('../helpers/authenticate')
+const authenticate = require('../middleware/authenticate')
 
 router.get('/', authenticate, getAllPosts)
 router.post('/', createPost)

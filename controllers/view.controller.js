@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router()
 const path = require('path');
-const authenticate = require('../helpers/authenticate')
+const authenticate = require('../middleware/authenticate')
 
 const rootPath = path.dirname(require.main.filename)
 

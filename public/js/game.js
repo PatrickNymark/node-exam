@@ -7,12 +7,12 @@ const socket = io.connect("http://localhost:5000")
 
 /* requests the current game by the gameId */
 socket.on('connect', () => {
-    socket.emit('request-game', gameId)
+    socket.emit('request-game', gameId, true)
 })
 
 /* this is being emitted from the server when a bet is updated */ 
 socket.on('update-bets', () => {
-    socket.emit('update-game', gameId)
+    socket.emit('request-game', gameId, false)
 })
 
 /* called on initial load after calling request-game, to build the dom */

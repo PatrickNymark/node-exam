@@ -5,14 +5,14 @@ const socket = io.connect("http://localhost:5000")
 socket.on('connect', () => {
     const bets = JSON.parse(localStorage.getItem('coupon'))
 
-    socket.emit('request-coupon', bets)
+    socket.emit('request-coupon', bets, true)
 })
 
 /* emitted from the server when a bet is updated */
 socket.on('update-bets', () => {
     const bets = JSON.parse(localStorage.getItem('coupon'))
 
-    socket.emit('update-coupon', bets)
+    socket.emit('request-coupon', bets, false)
 })
 
 
