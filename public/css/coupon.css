@@ -33,6 +33,7 @@
     border-radius: 25px 25px 25px 25px;
     padding: 0px 30px;
     margin: 10px;
+    background: #eee;
 
 }
 
@@ -55,6 +56,8 @@ input:focus::placeholder {
     cursor: pointer;
     border-radius: 25px 25px 25px 25px;
     pointer-events: none;
+    background: #0f3c0f;
+    color: #fff;
 }
 
 .btn:focus {
@@ -78,7 +81,7 @@ input:focus::placeholder {
     top: 50px;
     right: 50px;
     padding: 10px 50px;
-    background: #363636;
+    background: #0f3c0f;
     border-radius: 25px;
     color: #fff;
     font-size: 12px !important;

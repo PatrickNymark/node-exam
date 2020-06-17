@@ -18,6 +18,14 @@ const CouponSchema = new Schema({
     amount: {
         type: Number,
         required: true
+    },
+    finished: {
+        type: Boolean,
+        default: false
+    },
+    won: {
+        type: Boolean,
+        default: false
     }
 }, 
 { 

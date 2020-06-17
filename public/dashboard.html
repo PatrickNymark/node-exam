@@ -3,19 +3,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <title>Dashboard</title>
 
     <link rel="stylesheet" type="text/css" href="/css/dashboard.css">
     
 </head>
 <body>
     <div id="navigation"></div>
+    <div id="modal-background"></div>
     <div class="dashboard-page-wrapper">
-        <h1 class="dashboard-header">Dashboard</h1>
+        <div class="currency-wrapper">
+            <p>Balance: </p>
+            <button id="deposit">Deposit</button>
+        </div>
+        <div class="account-wrapper">
+            <div class="account-menu">
+                <div><a id="history-link" href="/">History</a></div>
+                <div><a id="active-link" href="/">Active Coupons</a></div>
+            </div>
+        </div>
 
-        <div class="dashboard-image-wrapper">
-            <img class="dashboard-image">
+        <h1 class="dashboard-header">Dashboard</h1>
+        <h2 class="dashboard-subheader"></h2>
+          
+        <div class="content">
+            <h3>Game Rules</h3>
+            <h4>Placement of bets</h4>
+            <p><span>How to place a bet:</span>
+                To place a bet, be sure to have a positive balance on your user, and pick atleast 1 bet from the market place. 
+                For each bet on the coupon the accumulated value for each bet is multiplied, if the coupon is in compliance with the rules.
+                In case of winning, your total deposit is multiplied by the total odds. In case of losing, your total deposit is lost.
+            </p>
+            <p><span>How to win a bet:</span>
+                All bets on the coupon has to be guessed correct to win. Once a game is finished, the bet will either turn won/lost based on the choice.
+            </p>
         </div>
     </div>
     <script

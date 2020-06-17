@@ -10,10 +10,13 @@ $(function() {
 
         const user = {
             email: $('#email').val(),
-            password: $('#password').val()
+            password: $('#password').val(),
+            firstName: $('#password').val(),
+            lastName: $('#password').val()
+
         }
 
-        if(!user.email || !user.password) {
+        if(!user.email || !user.password || !user.firstName || !user.lastName) {
             $('#error').css('opacity', '1')
             $('#error').text('Fields can not be empty')
             return

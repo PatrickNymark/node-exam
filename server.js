@@ -50,10 +50,11 @@ io.use(function(socket, next) {
 
 // register routes
 app.use('', require('./controllers/view.controller'))
-app.use('/api/posts', require('./controllers/post.controller'))
 app.use('/api/auth', require('./controllers/auth.controller'))
 app.use('/api/games', require('./controllers/game.controller'))
 app.use('/api/bets', require('./controllers/bet.controller'))
+app.use('/api/coupons', require('./controllers/coupon.controller'))
+app.use('/api/users', require('./controllers/user.controller'))
 
 // global error handler
 app.use(errorHandler);

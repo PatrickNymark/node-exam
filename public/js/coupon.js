@@ -1,3 +1,5 @@
+$.getScript('/js/injector.js')
+
 
 const socket = io.connect("http://localhost:5000")
 
@@ -123,7 +125,6 @@ socket.on('created-coupon', (coupon) => {
 })
 
 $(document).ready(function () {
-    $.getScript('/js/injector.js')
 
     /* delete bet from coupon */
     $(document).on('click', '#delete', function(){

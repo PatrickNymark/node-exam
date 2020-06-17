@@ -21,10 +21,6 @@ router.get('/dashboard', authenticate,(req, res) => {
     res.sendFile(rootPath + '/public/dashboard.html')
 })
 
-router.get('/posts', (req, res) => {
-    res.sendFile(rootPath + '/public/posts.html')
-})
-
 router.get('/games', (req, res) => {
     res.sendFile(rootPath + '/public/games.html')
 })
@@ -35,6 +31,10 @@ router.get('/games/:id', (req, res) => {
 
 router.get('/coupon', (req, res) => {
     res.sendFile(rootPath + '/public/coupon.html')
+})
+
+router.get('/active/:id', (req, res) => {
+    res.sendFile(rootPath + '/public/active-coupons.html')
 })
 
 

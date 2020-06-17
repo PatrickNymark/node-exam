@@ -1,7 +1,6 @@
 const gameService = require('../services/game.service');
 const betService = require('../services/bet.service');
-
-const Coupon = require('../models/Coupon')
+const couponService = require('../services/coupon.service');
 
 module.exports = function(socket) {
     socket.on('connection', function (socket) {
@@ -53,11 +52,17 @@ module.exports = function(socket) {
         socket.on('new-coupon', (coupon) => {
             coupon.creator = socket.request.session.user
 
-            const newCoupon = new Coupon(coupon)
-            newCoupon.save().then(coupon => {
-                socket.emit('created-coupon', coupon) 
-            })
+            couponService.create(coupon)
+                .then(coupon => socket.emit('created-coupon', coupon))
 
+        })
+
+        socket.on('request-active-coupons', () => {
+            var user = socket.request.session.user
+
+            couponService.findActiveByUser(user).then(coupons => {
+                socket.emit('requested-active-coupons', coupons)
+            })
         })
     })
 };
