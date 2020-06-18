@@ -6,6 +6,10 @@ const CouponSchema = new Schema({
         type: Array,
         required: true
     },
+    currentBets: {
+        type: Array,
+        requred: true
+    },
     creator: { 
         type: Schema.Types.ObjectId, 
         ref: 'user',
@@ -31,6 +35,10 @@ const CouponSchema = new Schema({
 { 
     timestamps: true 
 });
+
+CouponSchema.methods.checkIfFinished = function(cb) {
+    return cb(this.bets.every(bet => bet.bet.finished))
+}
 
 
 module.exports = Coupon = mongoose.model("coupon", CouponSchema);

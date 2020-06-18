@@ -6,6 +6,7 @@ const gameService = require('../services/game.service.js')
 router.get('/', getAllGames)
 router.post('/', createGame)
 router.get('/:id', getSingleGame)
+router.post('/finished/:id', setFinished)
 
 function getAllGames(req, res, next) {
     gameService.find()
@@ -27,6 +28,16 @@ function createGame(req, res, next) {
         })
         .catch(err => next(err))
 }
+
+function setFinished(req, res, next) {
+    gameService.finished(req.params.id, req.io)
+        .then(game => {
+            req.io.sockets.emit('update-coupons')
+            res.json(game)
+        })
+        .catch(err => next(err))
+}
+
 
 
 

@@ -64,5 +64,13 @@ module.exports = function(socket) {
                 socket.emit('requested-active-coupons', coupons)
             })
         })
+
+        socket.on('request-updated-coupons', () => {
+            var user = socket.request.session.user
+
+            couponService.findActiveByUser(user).then(coupons => {
+                socket.emit('requested-updated-coupons', coupons)
+            })
+        })
     })
 };

@@ -37,5 +37,9 @@ router.get('/active/:id', (req, res) => {
     res.sendFile(rootPath + '/public/active-coupons.html')
 })
 
+router.get('/history/:id', (req, res) => {
+    res.sendFile(rootPath + '/public/history-coupons.html')
+})
+
 
 module.exports = router

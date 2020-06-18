@@ -6,7 +6,8 @@ module.exports = {
     create,
     update,
     findById,
-    findByIds
+    findByIds,
+    findByGame
 }
 
 /**
@@ -49,4 +50,8 @@ async function findById(id) {
  */
 async function findByIds(ids) {
     return await Bet.find().populate('game_id').where('_id').in(ids)
+}
+
+async function findByGame(id) {
+    return await Bet.find({ game_id: id})
 }

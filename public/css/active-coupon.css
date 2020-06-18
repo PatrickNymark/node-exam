@@ -1,0 +1,97 @@
+.active-coupon-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.active-coupon {
+    width: calc(50% - 20px);
+    background: #eee;
+    margin: 10px 10px;
+    position: relative;
+    min-height: 250px;
+}
+
+.active-coupon h1 {
+    font-size: 20px;
+    color: #434343
+}
+
+.left {
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    text-align: left;
+}
+
+.left span {
+    display: block;
+    margin: 10px 0px;
+}
+
+.left span > span {
+    font-size: 12px;
+}
+
+.coupon-header {
+    min-height: 100px;
+}
+
+.active-numbers {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 12px;
+    text-align: left;
+    min-width: 200px;
+}
+
+.active-numbers p {
+    position: relative;
+}
+
+.active-numbers span {
+    position: absolute;
+    right: 0px;
+}
+
+.bet-content {
+    position: relative;
+    min-height: 50px;
+    border-top: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    margin: 20px 0px;
+}
+
+/* .bet-content p {
+    display: inline;
+} */
+
+.bet-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.bet-wrap p {
+    width: 50%;
+    text-align: right;
+    padding: 0px 25px;
+}
+
+.bet-wrap p:first-child {
+    text-align: left;
+}
+
+#game-won {
+    text-align: left;
+    font-size: 12px;
+    font-weight: bolder;
+}
+
+
+
+
+/* 
+.numbers-wrapper span {
+    position: absolute;
+    right: 20px;
+} */

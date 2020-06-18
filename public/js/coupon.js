@@ -111,16 +111,20 @@ socket.on('updated-coupon', (bets) => {
 })
 
 /* emitted after succesfully creating a coupon */
-socket.on('created-coupon', (coupon) => {
+socket.on('created-coupon', (coupon, user) => {
     $('.coupon-wrapper').html('')
 
     localStorage.removeItem('coupon')
 
-    $('.total-wrapper').html(`<p>No bets added to coupon`)
+    $('.total-wrapper').html(`<p>No bets added to coupon</p><a href="/games">Find Bets</a>`)
     $('.coupon-wrapper').hide().append('<p id="message" style="font-size: 15px">Coupon added! Good Luck!<p>')
         .fadeIn(700)
         .delay(3000)
         .fadeOut(300)
+    
+    $('.coupon-wrapper').delegate('#message','click',function() {
+        window.location = '/active/' + coupon.creator
+    });
 
 })
 
@@ -157,21 +161,37 @@ $(document).ready(function () {
         const coupon = {
             bets: joinedBets,
             total: total,
-            amount: 100
+            amount: $('#amount-input').val()
         }
 
-        socket.emit('new-coupon', coupon)
+        // this variable lives in the navigation.js
+        if((authenticatedUser.balance - Number(coupon.amount)) > 0) {
+            
+            $.post("/api/users/withdraw", { amount: Number(coupon.amount)})
+                .done(function (data) {
+                    console.log(data)
+                    $('#amount-input').val('')
+                    socket.emit('new-coupon', coupon)
+                })
+        } else {
+            $('.coupon-wrapper').append('<p id="message" style="background: red">Amount cant be higher than your balance!<p>')
+                // .fadeIn(700)
+                .delay(3000)
+                .fadeOut(300, () => {
+                    $('.coupon-wrapper #message').remove()
+                    $('.coupon-wrapper').show()
+                })
+
+            $('.coupon-wrapper').delegate('#message','click',function() {
+                window.location = '/dashboard/'
+            });
+        }
+
     });
 
     /* disable submit button when amount is less than or equal to 0 */
-    $(document).on('keyup', '#test', function(e) {
-        // if(!e.target.value > 0) {
+    $(document).on('keyup', '#amount-input', function(e) {
             verifyBets(oldBets, e.target.value)
-        //     $('.btn').css({'pointer-events': 'none'});
-        // } else {
-        //     $('.btn').css({'pointer-events': 'auto'});
-
-        // }
     })
     
 })

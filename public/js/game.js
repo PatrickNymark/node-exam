@@ -21,18 +21,19 @@ socket.on('initial-game', function(game) {
 
     $('#game-header').text(`${game.home} v ${game.away}`);
     game.bets.forEach(bet => {
+        console.log(bet)
         $('#game-wrapper').hide().append(
             `<div id="${game._id}">
                 <div id="${bet._id}" class="game-content">
                     <p class="odds-header">${bet.type}</p>
                     <div class="bet-content">
-                        <div id="0" class="${bet.x ? 'bet-item' : 'bet-item-2'}">
+                        <div id="0" class="${bet.x.odds ? 'bet-item' : 'bet-item-2'}">
                             <p><span>${bet.home.title ? bet.home.title : game.home}</span> <span class="odds">${bet.home.odds}</span></p>
                         </div>
-                        ${bet.x ? `<div id="1" class="bet-item">
+                        ${bet.x.odds ? `<div id="1" class="bet-item">
                             <p><span>${bet.x.title ? bet.x.title : 'Draw'} </span> <span class="odds">${bet.x.odds}</span></p>
                         </div>` : ""}
-                        <div id="2" class="${bet.x ? 'bet-item' : 'bet-item-2'}">
+                        <div id="2" class="${bet.x.odds ? 'bet-item' : 'bet-item-2'}">
                         
                             <p><span>${bet.away.title ? bet.away.title : game.away}</span> <span class="odds">${bet.away.odds}</span></p>
                         </div>

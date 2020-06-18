@@ -4,7 +4,7 @@ const Coupon = require('../models/Coupon');
 
 module.exports = {
     create,
-    findByUser,
+    findFinishedByUser,
     findActiveByUser
 }
 
@@ -18,13 +18,15 @@ async function create(couponData) {
 }
 
 /**
- * Get all coupons by user
+ * Get all finished coupons by user
  * @param {string} id representing a users id
  * @returns a Promise or exception  
  */
-async function findByUser(id) {
-    return Coupon.find().where('creator').equals(id)
+async function findFinishedByUser(id) {
+    return Coupon.find({ creator: id }).where('finished').equals(true)
 }
+
+
 
 /**
  * Find active coupons by user
@@ -32,5 +34,5 @@ async function findByUser(id) {
  * @returns a Promise or exception 
  */
 async function findActiveByUser(id) {
-    return Coupon.find({ creator: id}).where('finished').equals(false);
+    return await Coupon.find({ creator: id}).where('finished').equals(false)
 }

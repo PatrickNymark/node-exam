@@ -6,20 +6,36 @@ const BetSchema = new Schema({
     type: String,
     home: {
         title: String,
-        odds: Number
+        odds: Number,
+        won: {
+            type: Boolean,
+            default: false
+        }
     },
     x: {
         title: String,
-        odds: Number
+        odds: Number,
+        won: {
+            type: Boolean,
+            default: false
+        }
     },
     away: {
         title: String,
-        odds: Number
+        odds: Number,
+        won: {
+            type: Boolean,
+            default: false
+        }
     },
     game_id: {
         type: Schema.Types.ObjectId,
         ref: 'game', 
         required: true
+    },
+    finished: {
+        type: Boolean,
+        default: false
     }
 }, 
 { 
