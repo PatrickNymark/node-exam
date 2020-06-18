@@ -1,6 +1,7 @@
 $.getScript('/js/injector.js')
 
-const socket = io.connect("http://localhost:5000")
+var url = window.location
+const socket = io.connect(`http://${url.hostname}:5000`)
 
 var oldActiveCoupons = []
 

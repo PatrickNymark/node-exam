@@ -1,7 +1,8 @@
 $.getScript('/js/injector.js')
 
+var url = window.location
 
-const socket = io.connect("http://localhost:5000")
+const socket = io.connect(`http://${url.hostname}:5000`)
 
 /* open connection to recieve update bets from bets stored in localstorage  */
 socket.on('connect', () => {

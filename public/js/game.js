@@ -3,7 +3,8 @@ $.getScript('/js/injector.js')
 var gameId = window.location.pathname.substring(7)
 var bets = []
 
-const socket = io.connect("http://localhost:5000")
+var url = window.location
+const socket = io.connect(`http://${url.hostname}:5000`)
 
 /* requests the current game by the gameId */
 socket.on('connect', () => {
