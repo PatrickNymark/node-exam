@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router()
 const gameService = require('../services/game.service.js')
-// const authenticate = require('../helpers/authenticate')
 
-router.get('/', getAllGames)
+router.get('/', getAllActiveGames)
 router.post('/', createGame)
 router.get('/:id', getSingleGame)
 router.post('/finished/:id', setFinished)
 
-function getAllGames(req, res, next) {
+function getAllActiveGames(req, res, next) {
     gameService.find()
         .then(games => res.json(games))
         .catch(err => next(err))

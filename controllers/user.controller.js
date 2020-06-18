@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router()
 const userService = require('../services/user.service')
-// const authenticate = require('../middleware/authenticate')
+const authenticate = require('../middleware/authenticate')
 
-router.post('/deposit', depositAmount)
-router.post('/withdraw', withdrawAmount)
+router.post('/deposit', authenticate, depositAmount)
+router.post('/withdraw', authenticate, withdrawAmount)
 
 function depositAmount(req, res, next) {
     userService.deposit(req.session.user, req.body.amount)

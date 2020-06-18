@@ -33,6 +33,7 @@ const sessionMiddleware = session({
     })
 })
 
+
 app.use(sessionMiddleware);
 
 app.use(function(req, res, next) {

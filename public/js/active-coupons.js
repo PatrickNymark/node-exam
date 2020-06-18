@@ -20,13 +20,23 @@ socket.on('update-coupons', () => {
 })
 
 socket.on('requested-updated-coupons', (coupons) => {
-    console.log('called')
+    console.log(coupons)
     buildDom(coupons, false)
 })
 
 function buildDom(coupons, initial) {
     if(!initial) $('.active-coupon-wrapper').html('');
     oldActiveCoupons = coupons
+
+    if(coupons.length === 0) {
+        $('.active-coupon-wrapper').css('justify-content', 'center')
+
+        $('.active-coupon-wrapper').append(
+            `<div>
+                <p>You dont have any active coupons..</p>
+            </div>
+        `)
+    }
 
     for(var i = 0; i < coupons.length; i++) {
         var date = moment(coupons[i].createdAt).format('DD/MM/YYYY HH:mm:ss');

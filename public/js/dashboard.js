@@ -22,7 +22,7 @@ function buildDom({ user, coupons }) {
     $('.dashboard-header').html(`${user.firstName} ${user.lastName}`)
     $('.dashboard-subheader').html(`${user.email}`)
 
-    $('.currency-wrapper p').append('$' + user.balance || 0)
+    $('.currency-wrapper p').append('$' + (user.balance || 0))
     $('.account-wrapper')
 
     // set history and active links

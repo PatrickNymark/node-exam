@@ -21,23 +21,23 @@ router.get('/dashboard', authenticate,(req, res) => {
     res.sendFile(rootPath + '/public/dashboard.html')
 })
 
-router.get('/games', (req, res) => {
+router.get('/games', authenticate, (req, res) => {
     res.sendFile(rootPath + '/public/games.html')
 })
 
-router.get('/games/:id', (req, res) => {
+router.get('/games/:id', authenticate, (req, res) => {
     res.sendFile(rootPath + '/public/game.html')
 })
 
-router.get('/coupon', (req, res) => {
+router.get('/coupon', authenticate, (req, res) => {
     res.sendFile(rootPath + '/public/coupon.html')
 })
 
-router.get('/active/:id', (req, res) => {
+router.get('/active/:id', authenticate, (req, res) => {
     res.sendFile(rootPath + '/public/active-coupons.html')
 })
 
-router.get('/history/:id', (req, res) => {
+router.get('/history/:id', authenticate, (req, res) => {
     res.sendFile(rootPath + '/public/history-coupons.html')
 })
 

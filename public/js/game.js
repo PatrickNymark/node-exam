@@ -21,8 +21,8 @@ socket.on('initial-game', function(game) {
     bets = game.bets;
 
     $('#game-header').text(`${game.home} v ${game.away}`);
+    
     game.bets.forEach(bet => {
-        console.log(bet)
         $('#game-wrapper').hide().append(
             `<div id="${game._id}">
                 <div id="${bet._id}" class="game-content">

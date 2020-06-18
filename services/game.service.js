@@ -29,7 +29,7 @@ async function create(gameData) {
  * @returns a Promise or exception  
  */
 async function find() {
-    return await Game.find();    
+    return await Game.find().where({ 'finished': false });    
 }
 
 /**
@@ -55,7 +55,7 @@ async function finished(id, io) {
                             }})
 
     const coupons = await Coupon.find({ 'bets.bet.game_id._id': id })
-    console.log(coupons)
+
     for(var i = 0; i < coupons.length; i++) {
         coupons[i].checkIfFinished(finished => {
             if(finished) {

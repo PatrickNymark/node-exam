@@ -1,6 +1,17 @@
 $.getScript('/js/injector.js')
 
 fetch('/api/games').then(res => res.json()).then(games => {
+    if(games.length === 0) {
+        $('#games-wrapper').css('justify-content', 'center')
+        $('#games-wrapper').css('pointer-events', 'none')
+
+        $('#games-wrapper').hide().append(
+            `<div class="game-wrapper">
+                <p>No upcoming games...</p>
+            </div>`
+        ).fadeIn(400)
+    }
+
     games.forEach(game => {
         $('#games-wrapper').hide().append(
             `<div class="game-wrapper">
